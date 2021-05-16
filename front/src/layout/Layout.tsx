@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import HomeIcon from "../icons/HomeIcon";
 import HomeOutlineIcon from "../icons/HomeOutlineIcon";
 import SearchIcon from "../icons/SearchIcon";
@@ -8,10 +8,10 @@ import UserOutlineIcon from "../icons/UsersOutlineIcon";
 import LogOut from "../icons/LogoutIcon";
 import { Flex, Box } from "reflexbox";
 import SEO from "../components/Helmet";
-import styled from "styled-components"
-import {DANGER} from "../constants/style"
-import { CheckAuthentication } from '../_helpers/CheckAuthentication';
-import {useLocation} from "react-router-dom"
+import styled from "styled-components";
+import { DANGER } from "../constants/style";
+import { CheckAuthentication } from "../_helpers/CheckAuthentication";
+import { useLocation } from "react-router-dom";
 
 interface NavLink {
   icon: JSX.Element;
@@ -22,37 +22,41 @@ interface NavLink {
 
 interface Props {
   search?: string;
-  title?:string;
-  description?:string;
+  title?: string;
+  description?: string;
 }
 
 const links: NavLink[] = [
   {
-    icon: <HomeIcon stroke={"white"} fill={"transparent"}/>,
+    icon: <HomeIcon stroke={"white"} fill={"transparent"} />,
     value: "Home",
     link: "/",
-    activeIcon: <HomeOutlineIcon stroke={"white"} fill={'white'}/>,
+    activeIcon: <HomeOutlineIcon stroke={"white"} fill={"white"} />,
   },
 
   {
-    icon: <SearchOutlineIcon stroke-with={"10px"} stroke={"white"} fill={"white"}/>,
+    icon: (
+      <SearchOutlineIcon stroke-with={"10px"} stroke={"white"} fill={"white"} />
+    ),
     value: "Search",
     link: "/search",
-    activeIcon:  <SearchIcon stroke-with={"20px"} stroke={"white"} fill={"white"}/>,
+    activeIcon: (
+      <SearchIcon stroke-with={"20px"} stroke={"white"} fill={"white"} />
+    ),
   },
 
   {
-    icon: <UserIcon stroke={"white"} fill={"transparent"}/>,
+    icon: <UserIcon stroke={"white"} fill={"transparent"} />,
     value: "Account",
     link: "/account",
-    activeIcon: <UserOutlineIcon stroke={"white"} fill={'white'}/>,
+    activeIcon: <UserOutlineIcon stroke={"white"} fill={"white"} />,
   },
 
   {
-    icon: <LogOut stroke={DANGER}/>,
+    icon: <LogOut stroke={DANGER} />,
     value: "Log Out",
     link: "/logout",
-    activeIcon: <LogOut stroke={DANGER}/>,
+    activeIcon: <LogOut stroke={DANGER} />,
   },
 ];
 
@@ -78,8 +82,7 @@ const MobileLink = styled(Flex)`
   }
 `;
 
-const Layout:React.FC<Props> = (props:Props) => {
-
+const Layout: React.FC<Props> = (props: Props) => {
   useEffect(() => {
     CheckAuthentication();
   });
@@ -87,9 +90,7 @@ const Layout:React.FC<Props> = (props:Props) => {
   const location = useLocation();
 
   return (
-    <SEO  title={props.title!}
-          description={props.description!}
-    >
+    <SEO title={props.title!} description={props.description!}>
       <Flex
         justifyContent="center"
         alignItems="center"
@@ -123,16 +124,16 @@ const Layout:React.FC<Props> = (props:Props) => {
               }}
               justifyContent="space-between"
             >
-                  {links.map((link, index) => {
-                    const active = location.pathname === link.link; 
-                    return (
-                      <a href={link.link}>
-                        <MobileLink>
-                          {active ? link.activeIcon : link.icon}
-                        </MobileLink>
-                      </a>
-                    );
-                  })}
+              {links.map((link, index) => {
+                const active = location.pathname === link.link;
+                return (
+                  <a href={link.link}>
+                    <MobileLink>
+                      {active ? link.activeIcon : link.icon}
+                    </MobileLink>
+                  </a>
+                );
+              })}
             </Flex>
           </Flex>
         </Flex>

@@ -2,9 +2,7 @@ import React from "react";
 import Layout from "../layout/Layout";
 
 const Account = () => {
-    return (
-        <div></div>
-    )
-}
+  return <div></div>;
+};
 
-export default Account
+export default Account;

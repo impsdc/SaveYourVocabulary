@@ -6,14 +6,13 @@ interface Props {
   description: string;
 }
 
-const SEO:React.FC<Props> = (props: Props) => {
+const SEO: React.FC<Props> = (props: Props) => {
   return (
     <div className="app">
       <Helmet>
-        <html lang="en" />
+        <html lang="Fr" />
         <title>{props.title}</title>
         <meta name="description" content={props.description} />
-        <meta name="theme-color" content="#fff" />
         <link rel="canonical" href="http://mysite.com/example" />
       </Helmet>
     </div>

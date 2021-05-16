@@ -74,12 +74,14 @@ def register():
         #store data in realtime database
         db.child('users/' + auth.current_user['localId'] +'/profile').set(data)
         
-        return jsonify(user_id=auth.current_user["localId"], user_token=user['idToken'], user_email=email, username=username)
+        return jsonify(user_id=auth.current_user["localId"], user_token=user['idToken'], user_email=email, username=username, status=True)
     except Exception as e:
         if "EMAIL_EXISTS" in str(e):
-            return jsonify(status="false", message="email already exist")
+            return jsonify(status=False, message="email already exist")
+        elif "WEAK_PASSWORD" in str(e):
+            return jsonify(status=False, message="password must be at leat 6 characters")
         else:
-            return jsonify(status="false", message=e)
+            return jsonify(status=False, message=str(e))
 
 #login route
 @app.route("/login", methods=["POST"])
@@ -97,8 +99,6 @@ def login():
         return jsonify(status=True, user_id=user["localId"], user_token=user['idToken'], user_email=email, username=username)
 
     except Exception as e:
-        print("error")
-        print(e)
         return jsonify(status="false", message="Wrong Credentials")  
 
 

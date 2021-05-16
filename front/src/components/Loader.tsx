@@ -1,5 +1,5 @@
 import styled, { keyframes } from "styled-components";
-import { PURPLE } from '../constants/style';
+import { PURPLE } from "../constants/style";
 
 const rotate = keyframes`
   from {

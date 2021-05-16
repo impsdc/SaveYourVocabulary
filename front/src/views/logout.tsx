@@ -1,9 +1,7 @@
 import React from "react";
 
 const logOut = () => {
-    return (
-        <p>logOut</p>
-    )
-}
+  return <p>logOut</p>;
+};
 
-export default logOut
+export default logOut;

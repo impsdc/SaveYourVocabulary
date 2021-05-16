@@ -20,7 +20,8 @@ On Back-End
 ## Roadmap
 
 - [x] Flask api
-- [ ] Login/register
+- [x] Login/register
 - [ ] Research for a word and saving it
 - [ ] Test area
+- [ ] Dark mode
 - [ ] Dockerize services for productions

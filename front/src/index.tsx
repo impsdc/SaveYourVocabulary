@@ -3,14 +3,14 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 import reportWebVitals from "./reportWebVitals";
-import { Provider } from 'react-redux';
+import { Provider } from "react-redux";
 import store from "./_redux/store";
 
 ReactDOM.render(
   <Provider store={store}>
     <React.StrictMode>
       <App />
-  </React.StrictMode>
+    </React.StrictMode>
   </Provider>,
   document.getElementById("root")
 );

@@ -1,9 +1,7 @@
 import React from "react";
 
 const Search = () => {
-    return (
-        <p>search</p>
-    )
-}
+  return <p>search</p>;
+};
 
-export default Search
+export default Search;

@@ -1,5 +1,5 @@
 import styled, { CSSProperties } from "styled-components";
-import React from "react"
+import React from "react";
 
 const ButtonStyle = styled.button`
   font-size: 1.2rem;
@@ -69,6 +69,7 @@ export const Button = (props: Props) => {
           style={{
             ...(props.style || {}),
           }}
+          type="submit"
         >
           {props.content!}
         </ButtonStyle>
