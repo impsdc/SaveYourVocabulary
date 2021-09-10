@@ -55,6 +55,18 @@ def isAuthenticated(f):
 #register
 @app.route('/register', methods=['POST'])
 def register():
+
+    data = request.get_json()
+
+    if request.json == None:
+        return jsonify(status=False, message="json encryption is wrong !")
+    elif "email" not in data:
+        return jsonify(status=False, message="Missing email field")
+    elif "password" not in data:
+        return jsonify(status=False, message="Missing password field")
+    elif "password" not in data:
+        return jsonify(status=False, message="Missing username field")
+
     username= request.json['username']
     email= request.json['email']
     password= request.json['password']
@@ -86,6 +98,15 @@ def register():
 #login route
 @app.route("/login", methods=["POST"])
 def login():
+    data = request.get_json()
+
+    if request.json == None:
+        return jsonify(status=False, message="json encryption is wrong !")
+    elif "email" not in data:
+        return jsonify(status=False, message="Missing email field")
+    elif "password" not in data:
+        return jsonify(status=False, message="Missing password field")
+    
     email = request.json["email"]
     password = request.json["password"]
     
@@ -134,7 +155,7 @@ def createWord(id):
             "definitions": i["definitions"]
         })
         try:
-            wordId = db.child('users/' + id + "/words/" + i['lang'] + "/" + i["word"]).set(data)
+            db.child('users/' + id + "/words/" + i['lang'] + "/" + i["word"]).set(data)
         except Exception as e:
             return jsonify(status="true", message=e)
     return jsonify(status="true")

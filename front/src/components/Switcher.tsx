@@ -24,17 +24,14 @@ const activeBack = `linear-gradient(156deg, ${PURPLE} 0%, ${PURPLE} 100%)`;
 
 interface Props {
   active: boolean;
-  onChange?: (value: boolean) => void;
+  onChange?:any;
 }
 
 export const Switcher = (props: Props) => {
-  const onChange = () => {
-    props.onChange?.(props.active);
-  };
 
   return (
     <div
-      onClick={onChange}
+      onClick={props.onChange}
       style={{
         ...backStyle,
         background: props.active ? activeBack : "rgba(255, 255, 255, 0.1)",

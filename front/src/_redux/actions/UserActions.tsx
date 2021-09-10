@@ -2,7 +2,6 @@ import {
   SET_USER,
   SET_ERRORS,
   SET_UNAUTHENTICATED,
-  LOADING_USER,
 } from "../types";
 import axios from "axios";
 
@@ -25,10 +24,9 @@ export const LoginUser = (userData: UserLogin, history: any) => (dispatch: any) 
       { headers: { "Content-Type": "application/json" } }
     )
     .then((res) => {
-      console.log(res);
       if (res.data.status === true) {
         localStorage.setItem(
-          "user",
+          "SaveYourVocabulary",
           JSON.stringify({
             DicoAccessToken: res.data.user_token,
             email: res.data.user_email,
@@ -36,7 +34,11 @@ export const LoginUser = (userData: UserLogin, history: any) => (dispatch: any) 
             username: res.data.username,
           })
         );
-        dispatch({ type: SET_USER });
+        dispatch({ 
+          type: SET_USER,
+          credentials : {id:res.data.user_id, username: res.data.username, email:res.data.user_email, mdp:userData.password},
+          token: res.data.user_token
+        });
         history.push("/");
       } else {
         dispatch({
@@ -77,18 +79,25 @@ export const RegisterUser =
               username: res.data.username,
             })
           );
-          dispatch({ type: SET_USER });
+          dispatch({ 
+            type: SET_USER,
+            credentials : {id:res.data.user_id, username: res.data.username, email:res.data.user_email, mdp:userData.password},
+            token: res.data.user_token
+          });
           history.push("/");
+
         } else if (res.data.message.includes("email")) {
           dispatch({
             type: SET_ERRORS,
             message: "Email déjà utilisé",
           });
+
         } else if (res.data.message.includes("password")) {
           dispatch({
             type: SET_ERRORS,
             message: "Le mot de passe doit faire au moins 6 characters",
           });
+
         } else {
           dispatch({
             type: SET_ERRORS,
@@ -106,16 +115,15 @@ export const RegisterUser =
       });
   };
 
-export const getUserData = () => (dispatch: any) => {
-  dispatch({ type: LOADING_USER });
+export const GetUserData = () => (dispatch: any) => {
   const user = localStorage.getItem("user");
   dispatch(user);
 };
 
-export const logoutUser = (history: any) => (dispatch: any) => {
+export const LogoutUser = (history:any) => (dispatch: any) => {
   localStorage.removeItem("user");
-  history.push("/login");
   dispatch({
     type: SET_UNAUTHENTICATED,
   });
+  history.push("/login");
 };

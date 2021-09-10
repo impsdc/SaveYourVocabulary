@@ -1,28 +1,37 @@
 import React from "react";
-import { BrowserRouter as Router, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./assets/style.scss";
-import index from "./views/index";
-import login from "./views/login";
-import search from "./views/search";
-import account from "./views/account";
-import logOut from "./views/logout";
+import Index from "./views/Index";
+import Login from "./views/Login";
+import Research from "./views/Research";
+import Account from "./views/Account";
+import WordDetail from "./views/WordDetail";
 
 import GuestRoute from "./_helpers/GuestRoute";
 import PrivateRoute from "./_helpers/PrivateRoute";
 
+import {ThemeProvider} from "styled-components"
+import {useDarkMode} from "./components/ThemeMode"
+import {LightTheme, DarkTheme, GlobalStyles} from "./constants/style"
+
 const App: React.FC = () => {
+  const [theme, mountedComponent] = useDarkMode();
+  const themeMode = theme === 'light' ? LightTheme : DarkTheme;
+
+  if(!mountedComponent) return <div/>
   return (
-    <div>
+    <ThemeProvider theme={themeMode}>
+      <GlobalStyles />
       <Router>
         <Switch>
-          <GuestRoute exact path="/login" component={login} />
-          <GuestRoute exact path="/logout/" component={logOut} />
-          <PrivateRoute exact path="/" component={index} />
-          <PrivateRoute exact path="/search" component={search} />
-          <PrivateRoute exact path="/account" component={account} />
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/" component={Index} />
+          <Route exact path="/search" component={Research} />
+          <Route path="/account" component={Account} />
+          <Route exact path="/word/:wordId" component={WordDetail} />
         </Switch>
       </Router>
-    </div>
+    </ThemeProvider>
   );
 };
 

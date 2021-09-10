@@ -10,7 +10,7 @@ import { useHistory } from "react-router-dom";
 
 import { connect, useSelector } from "react-redux";
 import { RegisterUser } from "../../_redux/actions/UserActions";
-import { SetError, ClearError } from "../../_redux/actions/UiAction";
+import { SetError, ClearError } from "../../_redux/actions/UiActions";
 
 const Input = styled.input`
   background: #dfe6e9;

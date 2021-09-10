@@ -8,7 +8,7 @@ import { useHistory } from "react-router-dom";
 
 import { connect, useSelector } from "react-redux";
 import { LoginUser } from "../../_redux/actions/UserActions";
-import { SetError, ClearError } from "../../_redux/actions/UiAction";
+import { SetError, ClearError } from "../../_redux/actions/UiActions";
 
 const Input = styled.input`
   background: #dfe6e9;
@@ -112,12 +112,11 @@ const LoginForm = (props: any) => {
   );
 };
 
-//this map the states to our props in this functional component
 const mapStateToProps = (state: any) => ({
   user: state.user,
   UI: state.UI,
 });
-//this map actions to our props in this functional component
+
 const mapActionsToProps = {
   LoginUser,
   SetError,

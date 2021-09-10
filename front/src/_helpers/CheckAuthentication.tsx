@@ -1,16 +1,23 @@
-import { logoutUser, getUserData } from "../_redux/actions/UserActions";
+import { LogoutUser } from "../_redux/actions/UserActions";
 import store from "../_redux/store";
 import { SET_AUTHENTICATED } from "../_redux/types";
 import { useHistory } from "react-router-dom";
 
+interface User {
+  DicoAccessToken?:string,
+  email?:string,
+  username?:string,
+  id?:string,
+}
+
 export const CheckAuthentication = () => {
-  const token = window.localStorage.getItem("DicoAccessToken");
+  const localUser:string = window.localStorage.getItem("user") as string ;
+  const user:User = JSON.parse(localUser)
   const history = useHistory();
 
-  if (token) {
+  if (user?.DicoAccessToken) {
     store.dispatch({ type: SET_AUTHENTICATED });
-    store.dispatch(getUserData());
   } else {
-    logoutUser(history);
+    LogoutUser(history);
   }
 };

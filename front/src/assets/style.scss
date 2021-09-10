@@ -38,15 +38,9 @@ input[type=text] {
   @extend .disabled;
 }
 
-$dark: #1B1C21;
-
 body {
-  -webkit-tap-highlight-color: transparent;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
   text-decoration: none;
-  color: $dark;
   margin: 0;
   padding: 0;
 }

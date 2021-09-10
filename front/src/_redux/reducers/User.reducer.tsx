@@ -2,12 +2,12 @@ import {
   SET_USER,
   SET_AUTHENTICATED,
   SET_UNAUTHENTICATED,
-  LOADING_USER,
 } from "../types";
 
 const initialState = {
   authenticated: false,
   credentials: {},
+  token:null
 };
 
 export default function (state = initialState, action: any) {
@@ -22,7 +22,8 @@ export default function (state = initialState, action: any) {
     case SET_USER:
       return {
         authenticated: true,
-        ...action.payload,
+        ...action.credentials,
+        token:action.token
       };
     default:
       return state;

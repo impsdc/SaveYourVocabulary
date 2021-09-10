@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import HomeIcon from "../icons/HomeIcon";
 import HomeOutlineIcon from "../icons/HomeOutlineIcon";
 import SearchIcon from "../icons/SearchIcon";
@@ -6,24 +6,20 @@ import SearchOutlineIcon from "../icons/SearchOutlineIcon";
 import UserIcon from "../icons/UsersIcon";
 import UserOutlineIcon from "../icons/UsersOutlineIcon";
 import LogOut from "../icons/LogoutIcon";
-import { Flex, Box } from "reflexbox";
+import { Flex } from "reflexbox";
 import SEO from "../components/Helmet";
 import styled from "styled-components";
 import { DANGER } from "../constants/style";
-import { CheckAuthentication } from "../_helpers/CheckAuthentication";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation, useHistory } from "react-router-dom";
+import { connect } from "react-redux";
+import {LogoutUser } from "../_redux/actions/UserActions"
+import { SetError, ClearError } from "../_redux/actions/UiActions"
 
 interface NavLink {
   icon: JSX.Element;
   value: string;
   link: string;
   activeIcon: JSX.Element;
-}
-
-interface Props {
-  search?: string;
-  title?: string;
-  description?: string;
 }
 
 const links: NavLink[] = [
@@ -82,15 +78,26 @@ const MobileLink = styled(Flex)`
   }
 `;
 
-const Layout: React.FC<Props> = (props: Props) => {
-  useEffect(() => {
-    CheckAuthentication();
-  });
+interface IProps {
+  [x: string]: any;
+  search?:JSX.Element
+  children?: JSX.Element[] | JSX.Element 
+};
 
+const Layout: React.FC<IProps> = (props:IProps) => {
+  
   const location = useLocation();
+  const history = useHistory();
 
   return (
-    <SEO title={props.title!} description={props.description!}>
+    <div>
+      <SEO title={'SaveYourVocabulary app'} description={'made by impsdc.fr'} />
+      <Flex>
+        {props.search}
+      </Flex>
+      <Flex my={2} mx={4}>
+        {props.children}
+      </Flex>
       <Flex
         justifyContent="center"
         alignItems="center"
@@ -127,19 +134,39 @@ const Layout: React.FC<Props> = (props: Props) => {
               {links.map((link, index) => {
                 const active = location.pathname === link.link;
                 return (
-                  <a href={link.link}>
-                    <MobileLink>
-                      {active ? link.activeIcon : link.icon}
-                    </MobileLink>
-                  </a>
+                  <span  key={index}>
+                    {link.link === "/logout" ? 
+                      <span onClick={() => props.LogoutUser(history)}>
+                       <MobileLink>
+                         {active ? link.activeIcon : link.icon}
+                       </MobileLink>
+                     </span>
+                     :
+                     <Link to={link.link}>
+                      <MobileLink>
+                        {active ? link.activeIcon : link.icon}
+                      </MobileLink>
+                   </Link>
+                    }
+                  </span>
                 );
               })}
             </Flex>
           </Flex>
         </Flex>
       </Flex>
-    </SEO>
+    </div>
   );
 };
 
-export default Layout;
+const mapStateToProps = (state: any) => ({
+  user: state.user,
+  UI: state.UI,
+});
+
+const mapActionsToProps = {
+  LogoutUser,
+  SetError,
+  ClearError,
+};
+export default connect(mapStateToProps, mapActionsToProps)(Layout);
